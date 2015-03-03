@@ -1,23 +1,10 @@
-var TOPICS =
-    [ 'crowdfunding', 'closelyheld', 'closelyheld-ref1', 'etax'
-    , 'distant-education', 'telework', 'telemedicine'
-    , 'data-levy', 'consumer-protection', 'personal-data-protection'
+var TOPICS = [ 'new-economy', 'new-society', 'new-politics'
     ];
 var PREFIXES =
-    [ { key: "commerce"
-      , title: "可以不去開曼設公司嗎？"
-      , description: "台灣許多新創公司都會跑去開曼群島之類的地方設立，為什麼不願意留在台灣呢？"
-      , issue: "群眾募資、閉鎖型公司、網路交易課稅"
-      }
-    , { key: "lifestyle"
-      , title: "踏進充滿想像的任意門。"
-      , description: "在數位化生活的時代，要怎樣利用網路無遠弗屆的特性，創造更多的想像空間？"
-      , issue: "遠距教育、勞動、健康照護"
-      }
-    , { key: "civic"
-      , title: "黑盒子打開之後..."
-      , description: "透過網路發展的公民社會，應該如何同時營造自由且安全的數位環境？"
-      , issue: "開放資料、消費者保護、個人資料去識別化"
+    [ { key: "phase1"
+      , title: "一起動腦，打造新政黨！"
+      , description: "社會民主黨就新經濟、新社會、新政治三大領域，提出相關的理念思辨與政策討論題目，廣徵各界意見，釐清需討論的問題。"
+      , issue: "新經濟、新社會、新政治"
       }
     ];
 var app = angular.module("app", [
@@ -89,8 +76,8 @@ app.config(['$routeProvider','$locationProvider','$sceDelegateProvider','MetaPro
 
     MetaProvider.
       otherwise({
-        title: 'vTaiwan 線上法規討論平台',
-        description: '這是行政院虛擬世界發展法規調適規劃方案的線上法規討論平台，由資策會科技法律研究所與 g0v vTaiwan.tw 專案參與者共同建置。'
+        title: '社會民主黨網路審議',
+        description: '這是社會民主黨籌備處討論政綱與政見的平台，由籌備處與 g0v 動民主專案參與者共同建置。'
     });
 
     //$locationProvider.html5Mode(true);
