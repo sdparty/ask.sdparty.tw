@@ -1,14 +1,14 @@
-vTaiwan.tw
+ask.sdparty.tw
 ==========
 
-行政院法規線上諮詢系統
+社會民主黨網路審議系統
 
-* 開發在 `gh-pages` 分支，預覽在 https://demo.vtaiwan.tw/
+* 開發在 `gh-pages` 分支，預覽在 https://demo.sdparty.tw/
  * Please send pull requests and commits toward `gh-pages`
-* 部署在 `master` 分支，會在 https://vtaiwan.tw/
- * This require a manual merge and will take effect in 1hr (after CloudFlare cache expiry)
+* 部署在 `master` 分支，會在 https://ask.sdparty.tw/
+ * This require a manual merge and will take effect in 2hr (after CloudFlare cache expiry)
 
-目前已如期在 2/1 上線！FB: https://www.facebook.com/vtaiwan.tw
+FB: https://www.facebook.com/sdparty
 上線後繼續每周二小松更新系統，下次大幅更新（可能要另開 branch）預期在 3/1。
 
 ## 部署機的範例設定

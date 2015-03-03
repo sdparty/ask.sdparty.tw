@@ -1,7 +1,7 @@
 {
-  "name": "vtaiwan.tw",
+  "name": "ask.sdparty.tw",
   "version": "0.0.1",
-  "description": "vtaiwan.tw",
+  "description": "ask.sdparty.tw",
   "main": "server.js",
   "dependencies": {
     "express": "^4.10.7",
@@ -33,12 +33,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/g0v/vtaiwan.tw.git"
+    "url": "https://github.com/sdparty/ask.sdparty.tw.git"
   },
-  "author": "vtaiwan.tw",
+  "author": "ask.sdparty.tw",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/g0v/vtaiwan.tw/issues"
+    "url": "https://github.com/sdparty/ask.sdparty.tw/issues"
   },
-  "homepage": "https://github.com/g0v/vtaiwan.tw"
+  "homepage": "https://github.com/sdparty/ask.sdparty.tw"
 }
