@@ -19,8 +19,8 @@ app.config(['$routeProvider','$locationProvider','$sceDelegateProvider','MetaPro
   function($routeProvider,$locationProvider,$sceDelegateProvider,MetaProvider){
     $sceDelegateProvider.resourceUrlWhitelist([
       'self',
-      'https://vtaiwan.tw/**',
-      'https://*.vtaiwan.tw/**'
+      'https://sdparty.tw/**',
+      'https://*.sdparty.tw/**'
     ]);
 
     TOPICS.forEach(function(x) {
@@ -103,9 +103,9 @@ app.factory('DataService', function ($http, $q){
 
   function replaceLink (post) {
     return post.replace(/href=\"\/(users\/[^\"]+)\"/g, function (matched, it) {
-      return "target=\"_blank\" href=\"https://talk.vtaiwan.tw/" + it + "\"";
+      return "target=\"_blank\" href=\"https://talk.sdparty.tw/" + it + "\"";
     }).replace(/src=\"\/(images\/[^\"]+)\"/g, function (matched, it) {
-      return "src=\"https://talk.vtaiwan.tw/" + it + "\"";
+      return "src=\"https://talk.sdparty.tw/" + it + "\"";
     });
   }
 
@@ -208,10 +208,10 @@ app.factory('DataService', function ($http, $q){
                                     CachedData[proposal_item.title_eng].PostCount += posts_data.posts_count;
 
                                 // Parse direct image url
-                                // from: "/user_avatar/talk.vtaiwan.tw/audreyt/{size}/6.png"
-                                // to: "/user_avatar/talk.vtaiwan.tw/audreyt/50/6.png"
+                                // from: "/user_avatar/talk.sdparty.tw/audreyt/{size}/6.png"
+                                // to: "/user_avatar/talk.sdparty.tw/audreyt/50/6.png"
                                 for(var key in children_item.posts){
-                                    children_item.posts[key].avatar_url = 'https://talk.vtaiwan.tw/' + children_item.posts[key].avatar_template.replace('{size}', '90');
+                                    children_item.posts[key].avatar_url = 'https://talk.sdparty.tw/' + children_item.posts[key].avatar_template.replace('{size}', '90');
                                 }
 
                                 // Fixed issue #29
@@ -277,7 +277,7 @@ app.factory('DataService', function ($http, $q){
         deferred.resolve(JSON.parse(window.atob(b64)));
         return deferred.promise;
     }
-    $http.get('https://api.github.com/repos/g0v/'+ path + '-gitbook/contents/content.json?ref=gh-pages').
+    $http.get('https://api.github.com/repos/sdparty/'+ path + '-gitbook/contents/content.json?ref=gh-pages').
         success(function(data, status, headers, config) {
             localStorage.setItem(path, data.content);
             deferred.resolve(JSON.parse(window.atob(data.content)));
@@ -290,7 +290,7 @@ app.factory('DataService', function ($http, $q){
 
   DataService.getPostIdData = function(category_num){
     var deferred = $q.defer();
-    $http.get('https://talk.vtaiwan.tw/c/'+category_num+'-category.json').
+    $http.get('https://talk.sdparty.tw/c/'+category_num+'-category.json').
     success(function(data, status, headers, config) {
           deferred.resolve(data);
         }).
@@ -302,13 +302,13 @@ app.factory('DataService', function ($http, $q){
 
   DataService.getPostData = function(topicID){
     var deferred = $q.defer();
-    $http.get('https://talk.vtaiwan.tw/t/topic/'+topicID+'.json').
+    $http.get('https://talk.sdparty.tw/t/topic/'+topicID+'.json').
       success(function(data, status, headers, config) {
         if (data.posts_count <= 20) {
           return deferred.resolve(data);
         }
         for (var i = 2; i <= parseInt(data.posts_count/20)+1; i++) {
-          $http.get('https://talk.vtaiwan.tw/t/topic/'+topicID+'.json?page=' + i).
+          $http.get('https://talk.sdparty.tw/t/topic/'+topicID+'.json?page=' + i).
             success(function (pageData) {
               data.post_stream.posts = data.post_stream.posts.concat(pageData.post_stream.posts);
               if (data.post_stream.posts.length === data.posts_count) {
@@ -411,7 +411,7 @@ app.controller('IndexCtrl', ['$scope', 'DataService', '$location', '$sce', funct
     }
   };
   DataService.getCatchedData().then(function (d) { $scope.safeApply(function(){
-    $scope.idx = 1;
+    $scope.idx = 0;
     Object.keys(d).map(function (title){
       var blockquote = d[title].categories[0].content.match(/<blockquote>\n((?:.+\n)+)<\/blockquote>\n/);
       $scope.proposal[title] = (blockquote)? blockquote[1] : "";
@@ -631,19 +631,19 @@ app.controller('ProposalCtrl', ['$scope', 'DataService', '$location', '$sce', '$
 
   $scope.toTrusted = function(html_code) {
     if(!html_code) return;
-    html_code = html_code.replace(/(?:\/\/talk.vtaiwan.tw)?(\/user_avatar.+\.png)/g, function (_0, _1) {
-      return "https://talk.vtaiwan.tw" + _1;
+    html_code = html_code.replace(/(?:\/\/talk.sdparty.tw)?(\/user_avatar.+\.png)/g, function (_0, _1) {
+      return "https://talk.sdparty.tw" + _1;
     });
     return $sce.trustAsHtml(html_code);
   };
 
   $scope.shareToFacebook = function() {
-    var url = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent('https://vtaiwan.tw/#!' + $location.$$path);
+    var url = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent('https://sdparty.tw/#!' + $location.$$path);
     window.open(url, 'fbshare', 'width=640,height=320');
   };
 
   $scope.shareToTwitter = function() {
-    var url = "https://twitter.com/intent/tweet?text="+ $scope.currentDiscussion.title + "&amp;url=" + encodeURIComponent('https://vtaiwan.tw/#!' + $location.$$path);
+    var url = "https://twitter.com/intent/tweet?text="+ $scope.currentDiscussion.title + "&amp;url=" + encodeURIComponent('https://sdparty.tw/#!' + $location.$$path);
     window.open(url, 'twittershare', 'width=640,height=320');
   };
 
