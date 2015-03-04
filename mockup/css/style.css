@@ -1,5 +1,4 @@
 @import url(https://fonts.googleapis.com/css?family=Noto+Sans);
-@import url(https://fonts.googleapis.com/css?family=Gentium+Basic);
 
 body {
   font-family: "Source Han Sans TC", "Noto Sans", Helvetica, Arial, sans-serif;
@@ -600,9 +599,6 @@ a.nav_item_sidebar--sub:hover {
 #site_logo_text, .logo {
   font-family: 'Gentium Basic', 'Gentium', serif;
   display: inline-block;
-}
-#site_logo_text::first-letter, .logo::first-letter {
-  margin-right: 1px;
 }
 .nav_left_toggle {
   position: absolute;
