@@ -1,5 +1,4 @@
 @import url(https://fonts.googleapis.com/css?family=Noto+Sans);
-@import url(https://fonts.googleapis.com/css?family=Gentium+Basic);
 
 body {
   font-family: "Source Han Sans TC", "Noto Sans", Helvetica, Arial, sans-serif;
@@ -297,7 +296,7 @@ a.button--wide {
   top: 0px;
   left: -100%;
   overflow: scroll;
-  position: absolute;
+  position: fixed;
   text-align: center;
 
   -moz-transition: .2s;
@@ -490,7 +489,7 @@ a.nav_item_sidebar--left {
   padding: 12px;
   height: 50px;
   color: rgb(247,247,247);
-  background-color: #255;
+  background-color: #634;
 
   font-size: 18px;
   font-weight: 700;
@@ -600,9 +599,6 @@ a.nav_item_sidebar--sub:hover {
 #site_logo_text, .logo {
   font-family: 'Gentium Basic', 'Gentium', serif;
   display: inline-block;
-}
-#site_logo_text::first-letter, .logo::first-letter {
-  margin-right: 1px;
 }
 .nav_left_toggle {
   position: absolute;
@@ -834,7 +830,7 @@ a.nav_item_sidebar--sub:hover {
 .Stage-content {
   overflow: hidden;
   _overflow:visible;
-  zoom:1; 
+  zoom:1;
   padding-left: 5px;
 }
 .Stage-index-number {
@@ -1362,7 +1358,7 @@ a.more {
   padding-bottom: 5px;
   display: inline-block;
   vertical-align: top;
-  
+
 }
 @media screen and (min-width: 400px){
   .Proposal-title {

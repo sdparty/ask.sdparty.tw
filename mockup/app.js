@@ -1,39 +1,29 @@
+
 "use strict";
 var PROPOSALS = {{proposals}};
-var TOPICS =
-    [ 'crowdfunding', 'closelyheld', 'closelyheld-ref1', 'etax'
-    , 'distant-education', 'telework', 'telemedicine'
-    , 'data-levy', 'consumer-protection', 'personal-data-protection'
+var TOPICS = [ 'new-economy', 'new-society', 'new-politics'
     ];
 var PREFIXES =
-    [ { key: "commerce"
-      , title: "可以不去開曼設公司嗎？"
-      , description: "台灣許多新創公司都會跑去開曼群島之類的地方設立，為什麼不願意留在台灣呢？"
-      , issue: "群眾募資、閉鎖型公司、網路交易課稅"
-      }
-    , { key: "lifestyle"
-      , title: "踏進充滿想像的任意門。"
-      , description: "在數位化生活的時代，要怎樣利用網路無遠弗屆的特性，創造更多的想像空間？"
-      , issue: "遠距教育、勞動、健康照護"
-      }
-    , { key: "civic"
-      , title: "黑盒子打開之後..."
-      , description: "透過網路發展的公民社會，應該如何同時營造自由且安全的數位環境？"
-      , issue: "開放資料、消費者保護、個人資料去識別化"
+    [ { key: "phase1"
+      , title: "一起動腦，打造新政黨！"
+      , description: "社會民主黨就新經濟、新社會、新政治三大領域，提出相關的理念思辨與政策討論題目，廣徵各界意見，釐清需討論的問題。"
+      , issue: "新經濟、新社會、新政治"
       }
     ];
 var app = angular.module("app", [
   "angular-carousel",
   "ngRoute",
-  "meta"
+  "meta",
+  "angulartics",
+  "angulartics.google.analytics"
 ]);
 
 app.config(['$routeProvider','$locationProvider','$sceDelegateProvider','MetaProvider',
   function($routeProvider,$locationProvider,$sceDelegateProvider,MetaProvider){
     $sceDelegateProvider.resourceUrlWhitelist([
       'self',
-      'https://vtaiwan.tw/**',
-      'https://*.vtaiwan.tw/**'
+      'https://sdparty.tw/**',
+      'https://*.sdparty.tw/**'
     ]);
 
     TOPICS.forEach(function(x) {
@@ -91,8 +81,8 @@ app.config(['$routeProvider','$locationProvider','$sceDelegateProvider','MetaPro
 
     MetaProvider.
       otherwise({
-        title: 'vTaiwan 線上法規討論平台',
-        description: '這是行政院虛擬世界發展法規調適規劃方案的線上法規討論平台，由資策會科技法律研究所與 g0v vTaiwan.tw 專案參與者共同建置。'
+        title: '社會民主黨網路審議',
+        description: '這是社會民主黨籌備處討論政綱與政見的平台，由籌備處與 g0v 動民主專案參與者共同建置。'
     });
 
   }]);
@@ -116,9 +106,9 @@ app.factory('DataService', function ($http, $q){
 
   function replaceLink (post) {
     return post.replace(/href=\"\/(users\/[^\"]+)\"/g, function (matched, it) {
-      return "target=\"_blank\" href=\"https://talk.vtaiwan.tw/" + it + "\"";
+      return "target=\"_blank\" href=\"https://talk.sdparty.tw/" + it + "\"";
     }).replace(/src=\"\/(images\/[^\"]+)\"/g, function (matched, it) {
-      return "src=\"https://talk.vtaiwan.tw/" + it + "\"";
+      return "src=\"https://talk.sdparty.tw/" + it + "\"";
     });
   }
 
@@ -221,10 +211,10 @@ app.factory('DataService', function ($http, $q){
                                     CachedData[proposal_item.title_eng].PostCount += posts_data.posts_count;
 
                                 // Parse direct image url
-                                // from: "/user_avatar/talk.vtaiwan.tw/audreyt/{size}/6.png"
-                                // to: "/user_avatar/talk.vtaiwan.tw/audreyt/50/6.png"
+                                // from: "/user_avatar/talk.sdparty.tw/audreyt/{size}/6.png"
+                                // to: "/user_avatar/talk.sdparty.tw/audreyt/50/6.png"
                                 for(var key in children_item.posts){
-                                    children_item.posts[key].avatar_url = 'https://talk.vtaiwan.tw/' + children_item.posts[key].avatar_template.replace('{size}', '90');
+                                    children_item.posts[key].avatar_url = 'https://talk.sdparty.tw/' + children_item.posts[key].avatar_template.replace('{size}', '90');
                                 }
 
                                 // Fixed issue #29
@@ -283,11 +273,18 @@ app.factory('DataService', function ($http, $q){
     return deferred.promise;
   };
 
+  var timestamp = '1425446590';
   DataService.getBookData = function(path){
     var deferred = $q.defer();
-    $http.get('/' + path + '/content.json').
+    var b64 = localStorage.getItem(path + timestamp);
+    if (b64) {
+        deferred.resolve(JSON.parse(window.atob(b64)));
+        return deferred.promise;
+    }
+    $http.get('https://api.github.com/repos/sdparty/'+ path + '-gitbook/contents/content.json?ref=gh-pages').
         success(function(data, status, headers, config) {
-          deferred.resolve(data);
+            localStorage.setItem(path + timestamp, data.content);
+            deferred.resolve(JSON.parse(window.atob(data.content)));
         }).
         error(function(data, status, headers, config) {
           deferred.resolve(data);
@@ -297,7 +294,7 @@ app.factory('DataService', function ($http, $q){
 
   DataService.getPostIdData = function(category_num){
     var deferred = $q.defer();
-    $http.get('https://talk.vtaiwan.tw/c/'+category_num+'-category.json').
+    $http.get('https://talk.sdparty.tw/c/'+category_num+'-category.json').
     success(function(data, status, headers, config) {
           deferred.resolve(data);
         }).
@@ -309,13 +306,30 @@ app.factory('DataService', function ($http, $q){
 
   DataService.getPostData = function(topicID){
     var deferred = $q.defer();
-    $http.get('https://talk.vtaiwan.tw/t/topic/'+topicID+'.json').
-    success(function(data, status, headers, config) {
-          deferred.resolve(data);
-        }).
-        error(function(data, status, headers, config) {
-          deferred.resolve(data);
-        });
+    $http.get('https://talk.sdparty.tw/t/topic/'+topicID+'.json').
+      success(function(data, status, headers, config) {
+        if (data.posts_count <= 20) {
+          return deferred.resolve(data);
+        }
+        for (var i = 2; i <= parseInt(data.posts_count/20)+1; i++) {
+          $http.get('https://talk.sdparty.tw/t/topic/'+topicID+'.json?page=' + i).
+            success(function (pageData) {
+              data.post_stream.posts = data.post_stream.posts.concat(pageData.post_stream.posts);
+              if (data.post_stream.posts.length === data.posts_count) {
+                data.post_stream.posts.sort(function (a, b) {
+                  return +a.id - +b.id;
+                });
+                deferred.resolve(data);
+              }
+            }).
+            error(function(data) {
+              deferred.resolve(data);
+            });
+        }
+      }).
+      error(function(data, status, headers, config) {
+        deferred.resolve(data);
+      });
     return deferred.promise;
   };
 
@@ -403,7 +417,7 @@ app.controller('IndexCtrl', ['$scope', 'DataService', '$location', '$sce', funct
     }
   };
   DataService.getCatchedData().then(function (d) { $scope.safeApply(function(){
-    $scope.idx = 1;
+    $scope.idx = 0;
     Object.keys(d).map(function (title){
       var blockquote = d[title].categories[0].content.match(/<blockquote>\n((?:.+\n)+)<\/blockquote>\n/);
       $scope.proposal[title] = (blockquote)? blockquote[1] : "";
@@ -624,19 +638,19 @@ app.controller('ProposalCtrl', ['$scope', 'DataService', '$location', '$sce', '$
 
   $scope.toTrusted = function(html_code) {
     if(!html_code) return;
-    html_code = html_code.replace(/(?:\/\/talk.vtaiwan.tw)?(\/user_avatar.+\.png)/g, function (_0, _1) {
-      return "https://talk.vtaiwan.tw" + _1;
+    html_code = html_code.replace(/(?:\/\/talk.sdparty.tw)?(\/user_avatar.+\.png)/g, function (_0, _1) {
+      return "https://talk.sdparty.tw" + _1;
     });
     return $sce.trustAsHtml(html_code);
   };
 
   $scope.shareToFacebook = function() {
-    var url = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent('https://vtaiwan.tw/#!' + $location.$$path);
+    var url = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent('https://sdparty.tw/#!' + $location.$$path);
     window.open(url, 'fbshare', 'width=640,height=320');
   };
 
   $scope.shareToTwitter = function() {
-    var url = "https://twitter.com/intent/tweet?text="+ $scope.currentDiscussion.title + "&amp;url=" + encodeURIComponent('https://vtaiwan.tw/#!' + $location.$$path);
+    var url = "https://twitter.com/intent/tweet?text="+ $scope.currentDiscussion.title + "&amp;url=" + encodeURIComponent('https://sdparty.tw/#!' + $location.$$path);
     window.open(url, 'twittershare', 'width=640,height=320');
   };
 
