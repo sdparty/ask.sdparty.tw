@@ -40,7 +40,7 @@
               <a ng-click="shareToFacebook()" target="_blank">
                 <div class="post_item_action_btn"><i class="fa fa-facebook"></i></div>
               </a>
-              <!-- <a ng-href="mailto:?to=&amp;subject={{currentDiscussion.title}}&amp;body=https://vtaiwan.tw/#!/closelyheld/{{focusCategory}}/{{currentDiscussion.id}}" target="_blank">
+              <!-- <a ng-href="mailto:?to=&amp;subject={{currentDiscussion.title}}&amp;body=https://sdparty.tw/#!/closelyheld/{{focusCategory}}/{{currentDiscussion.id}}" target="_blank">
                 <div class="post_item_action_btn"><i class="fa fa-envelope-o"></i></div>
               </a> -->
               <a target="_blank" ng-click="setSharePanel($index)">
@@ -49,14 +49,14 @@
               <a ng-click="shareToTwitter()" target="_blank">
                 <div class="post_item_action_btn"><i class="fa fa-twitter"></i></div>
               </a>
-              <a ng-href="https://talk.vtaiwan.tw/t/topic/{{currentDiscussion.id}}/{{$index + 1}}" target="_blank">
+              <a ng-href="https://talk.sdparty.tw/t/topic/{{currentDiscussion.id}}/{{$index + 1}}" target="_blank">
                 <div class="post_item_action_btn right"><i class="fa fa-reply"></i></div>
               </a>
 
           </div>
           <!-- reply link panel -->
           <div class="post_item_share_panel web" ng-show="shouldShowSharePanel($index)">
-            <input class="post_item_share_panel-input" value="https://vtaiwan.tw/#!/{{currentProposal.title_eng}}/{{focusCategory}}/{{currentDiscussion.id}}" id="input_{{$index}}" />
+            <input class="post_item_share_panel-input" value="https://sdparty.tw/#!/{{currentProposal.title_eng}}/{{focusCategory}}/{{currentDiscussion.id}}" id="input_{{$index}}" />
             <div class="post_item_share_panel-remove-bottom" ng-click="setSharePanel(false)"><i class="fa fa-times"></i></div>
           </div>
 
@@ -66,7 +66,7 @@
         <div class="post_item_share_panel mobile" ng-show="shouldShowSharePanel($index)">
           <div class="post_item_share_panel-mobile">
               連結到這個討論串：
-              <a href="https://vtaiwan.tw/#!/{{currentProposal.title_eng}}/{{focusCategory}}/{{currentDiscussion.id}}" target="_blank">https://vtaiwan.tw/#!/{{currentProposal.title_eng}}/{{focusCategory}}/{{currentDiscussion.id}}</a>
+              <a href="https://sdparty.tw/#!/{{currentProposal.title_eng}}/{{focusCategory}}/{{currentDiscussion.id}}" target="_blank">https://sdparty.tw/#!/{{currentProposal.title_eng}}/{{focusCategory}}/{{currentDiscussion.id}}</a>
           </div>
           <div class="post_item_share_panel-remove-top" ng-click="setSharePanel(false)"><i class="fa fa-times"></i></div>
         </div>
@@ -82,10 +82,10 @@
 
     </div>
 
-    <a class="mobile-only" href="https://talk.vtaiwan.tw/t/topic/{{currentDiscussion.id}}" target="_blank"><div class="toggle_reply_button" ng-show="focusDiscussion"><i class="fa fa-reply"></i></div></a>
+    <a class="mobile-only" href="https://talk.sdparty.tw/t/topic/{{currentDiscussion.id}}" target="_blank"><div class="toggle_reply_button" ng-show="focusDiscussion"><i class="fa fa-reply"></i></div></a>
 
         <div class="l_center">
-            <a style="background: #3F9F9B" href="https://talk.vtaiwan.tw/t/topic/{{currentDiscussion.id}}"
+            <a style="background: #3F9F9B" href="https://talk.sdparty.tw/t/topic/{{currentDiscussion.id}}"
                 target="_blank" ng-show="focusDiscussion"
                 class="about_item_button md-whiteframe-z1">我要留言</a>
       </div>
@@ -99,14 +99,14 @@
         <div class="post_reply_item_minimize" ng-click="toggleReplyItem()"><i class="fa fa-chevron-down"></i></div>
         <div class="post_reply_item_textarea">
             <textarea readonly>
-目前因議題文字調整中，我們本周會將 vTaiwan.tw 主站連上實際的討論區。
+目前因議題文字調整中，我們本周會將 sdparty.tw 主站連上實際的討論區。
 您可按底下的「回覆」鈕連到測試站，進行先期討論。
 </textarea>
         </div>
 
         <div class="post_reply_item_control">
             <div class="post_reply_item_control_button">
-            <a class="button" target="_blank" href="https://talk.vtaiwan.tw/c/6-category"><i class="fa fa-reply"></i> 回覆</a> <a class="cancel" ng-click="toggleReplyItem()">取消</a>
+            <a class="button" target="_blank" href="https://talk.sdparty.tw/c/6-category"><i class="fa fa-reply"></i> 回覆</a> <a class="cancel" ng-click="toggleReplyItem()">取消</a>
             </div>
         </div>
 
