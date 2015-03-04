@@ -273,18 +273,11 @@ app.factory('DataService', function ($http, $q){
     return deferred.promise;
   };
 
-  var timestamp = '1425446590';
   DataService.getBookData = function(path){
     var deferred = $q.defer();
-    var b64 = localStorage.getItem(path + timestamp);
-    if (b64) {
-        deferred.resolve(JSON.parse(window.atob(b64)));
-        return deferred.promise;
-    }
-    $http.get('https://api.github.com/repos/sdparty/'+ path + '-gitbook/contents/content.json?ref=gh-pages').
+    $http.get('/' + path + '/content.json').
         success(function(data, status, headers, config) {
-            localStorage.setItem(path + timestamp, data.content);
-            deferred.resolve(JSON.parse(window.atob(data.content)));
+          deferred.resolve(data);
         }).
         error(function(data, status, headers, config) {
           deferred.resolve(data);
