@@ -107,11 +107,13 @@ gulp.task("image", ["clean"], function () {
   var pngquant = require('imagemin-pngquant');
 
   return gulp.src("mockup/images/**/*")
+  /*
     .pipe(imagemin({
       progressive: true,
       svgoPlugins: [{removeViewBox: false}],
       use: [pngquant()]
     }))
+  */
     .pipe(gulp.dest("public/images"));
 
 });
