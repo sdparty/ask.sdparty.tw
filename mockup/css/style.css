@@ -1392,7 +1392,7 @@ a.more {
   font-size: 12px;
   color: rgb(100,100,100);
   font-weight: bold;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 }
 .Proposal-proposerName a, .Proposal-proposerName a:visited{
   color: rgb(80,80,80);
