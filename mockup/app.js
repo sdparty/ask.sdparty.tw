@@ -638,12 +638,12 @@ app.controller('ProposalCtrl', ['$scope', 'DataService', '$location', '$sce', '$
   };
 
   $scope.shareToFacebook = function() {
-    var url = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent('https://sdparty.tw/#!' + $location.$$path);
+    var url = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent('https://ask.sdparty.tw/#!' + $location.$$path);
     window.open(url, 'fbshare', 'width=640,height=320');
   };
 
   $scope.shareToTwitter = function() {
-    var url = "https://twitter.com/intent/tweet?text="+ $scope.currentDiscussion.title + "&amp;url=" + encodeURIComponent('https://sdparty.tw/#!' + $location.$$path);
+    var url = "https://twitter.com/intent/tweet?text="+ $scope.currentDiscussion.title + "&amp;url=" + encodeURIComponent('https://ask.sdparty.tw/#!' + $location.$$path);
     window.open(url, 'twittershare', 'width=640,height=320');
   };
 
