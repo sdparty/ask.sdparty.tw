@@ -8,8 +8,14 @@
 
     <div ng-show="!isProposalSet()">
       <a class="nav_item_sidebar--left" ng-click="go('')" >首頁</a>
-      <a class="nav_item_sidebar--left" ng-click="go('proposals')" >主題</a>
-      <a ng-repeat="t in TOPICS" class="nav_item_sidebar--sub"
+      <a class="nav_item_sidebar--left" ng-click="go('platforms')" >政綱</a>
+      <a ng-repeat="t in ['new-economy', 'new-society', 'new-politics']" class="nav_item_sidebar--sub"
+          ng-click="go(t)"><img class="Proposal-proposerImg"
+          ng-src="images/proposer/{{meta[t].title_eng}}.png"><span
+              ng-bind="meta[t].title_cht" class="title_cht"></span><span
+              class="nav_item_sidebar--switchmenu" ng-click="setProposal(t);$event.stopPropagation();"><i class="fa fa-chevron-right"></i></span></a>
+      <a class="nav_item_sidebar--left" ng-click="go('plans')" >政見</a>
+      <a ng-repeat="t in ['labor', 'welfare', 'taxation', 'transparency', 'diversity', 'prosperity']" class="nav_item_sidebar--sub"
           ng-click="go(t)"><img class="Proposal-proposerImg"
           ng-src="images/proposer/{{meta[t].title_eng}}.png"><span
               ng-bind="meta[t].title_cht" class="title_cht"></span><span
