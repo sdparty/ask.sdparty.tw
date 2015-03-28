@@ -5,7 +5,7 @@ var TOPICS = [ 'new-economy', 'new-society', 'new-politics' // Three Platforms
 var PREFIXES =
     [ { key: "platforms"
       , title: "政綱：擘劃更好的台灣。"
-      , description: "政綱，是社會民主黨對於一個「更好的台灣」所擘劃的藍圖。不同於作為短期工作目標的「政見」，政綱是社民黨長期奮鬥的大方向。"
+      , description: "政綱，是社會民主黨對於一個「更好的台灣」所擘劃的藍圖，是社民黨長期奮鬥的大方向。"
       , issue: "新經濟、新社會、新政治"
       }
     , { key: "plans"
