@@ -56,7 +56,8 @@ gulp.task("js", ["download"], function () {
 
   proposals.forEach(function (proposal) {
     var title = proposal.title_eng;
-    download("http://sdparty.github.io/" + title + "-gitbook/content.json")
+    var url = proposal.gitbook_url || ("http://sdparty.github.io/" + title + "-gitbook/");
+    download(url + "/content.json")
     .pipe(gulp.dest("public/" + title ));
   });
 
