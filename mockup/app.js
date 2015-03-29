@@ -1,7 +1,7 @@
 
 "use strict";
 var PROPOSALS = {{proposals}};
-var TOPICS = [ 'new-economy', 'new-society', 'new-politics' // Three Platforms
+var TOPICS = [ 'economy', 'society', 'politics' // Three Platforms
     , 'labor', 'welfare', 'taxation', 'transparency', 'diversity' // Five Arrows
     , 'prosperity' // One Bow
     ];
