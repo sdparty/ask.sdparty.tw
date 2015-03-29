@@ -1,6 +1,29 @@
 <div ng-include="'partials/nav.html'" ng-controller="NavCtrl"></div>
 <div id="content">
     <div class="wrapper">
+        <div ng-if="key == 'platforms'">
+            <p>
+            政綱，是社會民主黨對於一個「更好的台灣」所擘劃的藍圖。不同於作為短期工作目標的「政見」，政綱是社民黨長期奮鬥的大方向。</p>
+            <p>
+            歷經一個月的網路審議提問、公開論壇與團體拜訪，社民黨就「新經濟」、「新社會」與「新政治」三個面向提出草案，並將在 6/30 結束第二階段討論後，就各界的意見作最後編修，形成「社會民主黨對人民的政策承諾」。歡迎所有關心台灣未來的公民參與討論，找出我們沒有說清楚的地方、沒有注意到的面向，或是其他可以讓政綱更完整的建議，一起描繪「更好的台灣」。
+            </p>
+        </div>
+        <div ng-if="key == 'plans'">
+            <p>
+            政見，是社民黨在「政綱」所框架的基礎原則下，針對 2016
+            年國會改選，所擬訂的候選人共同政見─五箭一弓。社會民主黨的「五支箭」，即我們實踐社會民主理想的短期政策；「社民黨之弓」，則是說明社會民主理想若要長期實踐，必須徹底改變台灣當前的經濟模式。歷經一個月的網路審議提問、公開論壇與團體拜訪，社民黨政見綱要如下─
+            <ul>
+<li>社會民主黨第一箭：<b>提高薪資，捍衛勞動權，強化受雇階級力量</b>
+<li>社會民主黨第二箭：<b>全民年金大改革，建構平等社會安全體系</b>
+<li>社會民主黨第三箭：<b>財團富人要加稅，增進國家財政能力，強化財產的社會責任</b>
+<li>社會民主黨第四箭：<b>政治要公平透明、要可受監督、要不被收買</b>
+<li>社會民主黨第五箭：<b>尊重差異、反對歧視，共創多元社會</b>
+<li>社會民主黨之弓：<b>推動「社會經濟」模式</b>，創建兼顧社會正義、社會團結、資源共享的生產方式，管制資本，發展符合社會需求、環境永續、知識與技術創新、在地化與勞工合作的新產業。
+            </ul>
+            <p>
+            歡迎所有關心勞動權益、社會安全體系、稅改、政治透明，以及多元社會的台灣公民們參與討論，找出我們沒有說清楚的地方、沒有注意到的面向，或是其他可以讓政見更完整的建議。社民黨將在 6/30 結束第二階段討論後，就各界的意見作最後編修，形成「社會民主黨對人民的政策承諾」。
+            </p>
+        </div>
         <div ng-repeat="t in getTopics()" class="Proposal md-whiteframe-z1" ng-click="go(t)">
             <div class="Proposal-mainText">
                 <div class="Proposal-header">
@@ -45,19 +68,28 @@
                 <!-- step 2 info -->
                 <div ng-show="isFocusTab(t,'step2')">
                 <!-- ProgressBar -->
-                    <div class="ProgressBar-barBackground">
-                        <div class="ProgressBar-startDate">最快 3/1</div>
-                        <div class="ProgressBar-endDate">最快 4/1</div>
+                    <div class="ProgressBar-barBackground" ng-if="!proposalMeta[t].step2_start_date">
+                        <div class="ProgressBar-startDate">最快 4/13</div>
+                        <div class="ProgressBar-endDate">最快 5/1</div>
                         <div class="ProgressBar-barProgress" style="width:0%;"></div>
                     </div>
-                    <div class="ProgressBar-infoTitle">本階段尚未開始，目前規劃時程如下</div>
-                    <div class="ProgressBAr-infoContent">
+                    <div class="ProgressBar-infoTitle" ng-if="!proposalMeta[t].step2_start_date">本階段尚未開始，目前規劃如下：</div>
+                    <div class="ProgressBar-infoContent" ng-if="!proposalMeta[t].step2_start_date">
                     <ul>
-                        <li>2/28 版主群將寄出工作組邀請，聚會採全程逐字稿及錄影直播方式進行</li>
-                        <li>3/1-3/15 工作組第一次聚會</li>
-                        <li>3/15-3/31 工作組第二次聚會</li>
-                        <li>4/1 提案方決定是否繼續提出多次修正版草案，若是，則繼續工作組聚會</li>
+                        <li>版主群寄出工作組聚會邀請</li>
+                        <li>工作組第一次聚會，彙整具體建議</li>
+                        <li>提案方決定是否繼續提出多次修正版草案，若是，則繼續工作組聚會</li>
                     </ul>
+                    </div>
+                    <div class="ProgressBar-barBackground" ng-if="proposalMeta[t].step2_start_date">
+                        <div class="ProgressBar-startDate">{{ proposalMeta[t].step2_start_date | date:'M/d' }}</div>
+                        <div class="ProgressBar-endDate">{{ proposalMeta[t].step2_end_date | date:'M/d' }}</div>
+                        <div class="ProgressBar-barProgress" style="width:{{proposalMeta[t].percentage_2}}%;"></div>
+                    </div>
+                    <div class="ProgressBar-infoContent" ng-if="proposalMeta[t].step2_start_date">
+                        <div class="ProgressBar-stat">本階段還有<div class="ProgressBar-statHighlight">{{proposalMeta[t].left_day_2}} 天</div></div>
+                        <div class="ProgressBar-stat" ng-show="proposalMeta[t].TopicCount">討論話題<div class="ProgressBar-statHighlight">{{proposalMeta[t].TopicCount}}</div></div>
+                        <div class="ProgressBar-stat" ng-show="proposalMeta[t].PostCount">意見數<div class="ProgressBar-statHighlight">{{proposalMeta[t].PostCount}}</div></div>
                     </div>
                 </div>
                 <!-- step 3 info -->

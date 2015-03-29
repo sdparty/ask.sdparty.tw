@@ -409,6 +409,8 @@ app.controller('IndexCtrl', ['$scope', 'DataService', '$location', '$sce', funct
   $scope.proposal = {};
   $scope.TOPICS = TOPICS;
   $scope.PREFIXES = PREFIXES;
+  var key = $location.url().replace(/\/+/g, '');
+  $scope.key = key;
   $scope.safeApply = function(fn){
     var phase;
     phase = $scope.$$phase;
