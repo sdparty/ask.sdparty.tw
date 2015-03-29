@@ -1,13 +1,20 @@
 
 "use strict";
 var PROPOSALS = {{proposals}};
-var TOPICS = [ 'new-economy', 'new-society', 'new-politics'
+var TOPICS = [ 'new-economy', 'new-society', 'new-politics' // Three Platforms
+    , 'labor', 'welfare', 'taxation', 'transparency', 'diversity' // Five Arrows
+    , 'prosperity' // One Bow
     ];
 var PREFIXES =
-    [ { key: "phase1"
-      , title: "一起動腦，打造新政黨！"
-      , description: "社會民主黨就新經濟、新社會、新政治三大領域，提出相關的理念思辨與政策討論題目，廣徵各界意見，釐清需討論的問題。"
+    [ { key: "platforms"
+      , title: "政綱：擘劃更好的台灣。"
+      , description: "政綱，是社會民主黨對於一個「更好的台灣」所擘劃的藍圖，是社民黨長期奮鬥的大方向。"
       , issue: "新經濟、新社會、新政治"
+      }
+    , { key: "plans"
+      , title: "政見：五箭一弓。"
+      , description: "政見，是社民黨在「政綱」所框架的基礎原則下，針對 2016 年國會改選，所擬訂的候選人共同政見。"
+      , issue: "捍衛勞動權、全民年金改革、匡正稅制、透明監督、尊重差異、推動社會經濟"
       }
     ];
 var app = angular.module("app", [
@@ -139,7 +146,7 @@ app.factory('DataService', function ($http, $q){
     //[1] Get gitbook content
     DataService.getProposalMetaData().then(function(proposals) {
     proposals.map(function (proposal_item) {
-        DataService.getBookData(proposal_item.title_eng).then(function (book_data){
+        DataService.getBookData(proposal_item.title_eng, proposal_item.gitbook_url).then(function (book_data){
             CachedData[proposal_item.title_eng] = {};
             CachedData[proposal_item.title_eng].categories = book_data;
             CachedData[proposal_item.title_eng].title_cht = proposal_item.title_cht;
@@ -299,6 +306,10 @@ app.factory('DataService', function ($http, $q){
 
   DataService.getPostData = function(topicID){
     var deferred = $q.defer();
+    if (''+topicID === 'undefined') {
+        deferred.resolve({post_stream: { posts: [] }});
+        return deferred.promise;
+    }
     $http.get('https://talk.sdparty.tw/t/topic/'+topicID+'.json').
       success(function(data, status, headers, config) {
         if (data.posts_count <= 20) {
@@ -400,6 +411,8 @@ app.controller('IndexCtrl', ['$scope', 'DataService', '$location', '$sce', funct
   $scope.proposal = {};
   $scope.TOPICS = TOPICS;
   $scope.PREFIXES = PREFIXES;
+  var key = $location.url().replace(/\/+/g, '');
+  $scope.key = key;
   $scope.safeApply = function(fn){
     var phase;
     phase = $scope.$$phase;
