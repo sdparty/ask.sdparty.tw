@@ -1,7 +1,7 @@
 
 "use strict";
 var PROPOSALS = {{proposals}};
-var TOPICS = [ 'economy', 'society', 'politics' // Three Platforms
+var TOPICS = [ 'new-economy', 'new-society', 'new-politics' // Three Platforms
     , 'labor', 'welfare', 'taxation', 'transparency', 'diversity' // Five Arrows
     , 'prosperity' // One Bow
     ];
@@ -548,7 +548,7 @@ app.controller('ProposalCtrl', ['$scope', 'DataService', '$location', '$sce', '$
   var topicref = $location.$$url.split('/')[1] || 'crowdfunding';
 
   // Redirect now before we fix the loading issues
-  location.href = 'https://talk.sdparty.tw/c/' + topicref;
+  location.href = 'https://talk.sdparty.tw/c/' + (topicref.replace(/^new-/, ''));
   return;
 
   //topicref = $location.path().split('/')[1] || 'crowdfunding';
