@@ -143,7 +143,7 @@ app.factory('DataService', function ($http, $q){
     //[1] Get gitbook content
     DataService.getProposalMetaData().then(function(proposals) {
     proposals.map(function (proposal_item) {
-        DataService.getBookData(proposal_item.title_eng).then(function (book_data){
+        DataService.getBookData(proposal_item.title_eng, proposal_item.gitbook_url).then(function (book_data){
             CachedData[proposal_item.title_eng] = {};
             CachedData[proposal_item.title_eng].categories = book_data;
             CachedData[proposal_item.title_eng].title_cht = proposal_item.title_cht;
@@ -277,15 +277,21 @@ app.factory('DataService', function ($http, $q){
     return deferred.promise;
   };
 
-  var timestamp = '1425446590';
-  DataService.getBookData = function(path){
+  var timestamp = '1427633425';
+  DataService.getBookData = function(path, gitbook_url){
     var deferred = $q.defer();
     var b64 = localStorage.getItem(path + timestamp);
     if (b64) {
         deferred.resolve(JSON.parse(window.atob(b64)));
         return deferred.promise;
     }
-    $http.get('https://api.github.com/repos/sdparty/'+ path + '-gitbook/contents/content.json?ref=gh-pages').
+    var url = 'https://api.github.com/repos/sdparty/'+ path + '-gitbook';
+    if (gitbook_url) {
+        url = gitbook_url
+                .replace('//', '//api.github.com/repos/')
+                .replace('.github.io', '');
+    }
+    $http.get(url + '/contents/content.json?ref=gh-pages').
         success(function(data, status, headers, config) {
             localStorage.setItem(path + timestamp, data.content);
             deferred.resolve(JSON.parse(window.atob(data.content)));
