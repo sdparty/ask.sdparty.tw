@@ -552,10 +552,10 @@ app.controller('IndexCtrl', ['$scope', 'DataService', '$location', '$sce', funct
 
 app.controller('ProposalCtrl', ['$scope', 'DataService', '$location', '$sce', '$routeParams', '$route', function ($scope, DataService, $location, $sce, $routeParams, $route){
 
-  topicref = $location.$$url.split('/')[1] || 'crowdfunding';
+  var topicref = $location.$$url.split('/')[1] || 'crowdfunding';
 
   // Redirect now before we fix the loading issues
-  location.href = 'https://talk.sdparty.tw/c/' + topicref;
+  location.href = 'https://talk.sdparty.tw/c/' + (topicref.replace(/^new-/, ''));
   return;
 
   //topicref = $location.path().split('/')[1] || 'crowdfunding';
