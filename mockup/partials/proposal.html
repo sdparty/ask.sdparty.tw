@@ -20,7 +20,7 @@
     <div class="q_title">{{currentCategory.title}}</div>
     <div ng-bind-html="toTrusted(currentCategory.content)"></div>
   
-    <div ng-if="i.post_count" class="issue_item md-whiteframe-z1" ng-repeat="i in currentCategory.children" ng-click="toggleDiscussion(i.index)" id="issue_item_{{i.index}}">
+    <div ng-show="i.post_count" class="issue_item md-whiteframe-z1" ng-repeat="i in currentCategory.children" ng-click="toggleDiscussion(i.index)" id="issue_item_{{i.index}}">
         <div class="issue_item_title"><span class="prompt">討論話題：</span>{{i.title.replace('：', '')}} <i class="fa fa-comments-o"></i><span class="issue_item_discuss_count">{{i.post_count}}</span></div>
 
         <div class="q_text" ng-bind-html="toTrusted(i.content)"></div>
@@ -30,7 +30,7 @@
     </div>
   </div>
 
-      <a target="_blank" ng-href="https://talk.sdparty.tw/c/{{ currentProposal.title_eng.replace('new-', '') }}" ng-unless="i.post_count" class="issue_item md-whiteframe-z1" ng-repeat="i in currentCategory.children" id="issue_item_{{i.index}}">
+      <a target="_blank" ng-href="https://talk.sdparty.tw/c/{{ currentProposal.title_eng.replace('new-', '') }}" ng-hide="i.post_count" class="issue_item md-whiteframe-z1" ng-repeat="i in currentCategory.children" id="issue_item_{{i.index}}">
         <div class="issue_item_title"><span class="prompt">討論話題：</span>{{i.title.replace('：', '')}} <i class="fa fa-comments-o"></i><span class="issue_item_discuss_count">{{i.post_count}}</span></div>
 
 
