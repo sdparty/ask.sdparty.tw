@@ -116,7 +116,7 @@ app.factory('DataService', function ($http, $q){
     });
   }
 
-  DataService.getCatchedData = function(){
+  DataService.getCachedData = function(){
     var deferred = $q.defer();
 
     if(CachedFetched === true){
@@ -173,10 +173,13 @@ app.factory('DataService', function ($http, $q){
             });
 
 
+            if(proposal_item.title_eng === proposals[proposals.length-1].title_eng){
+                deferred.resolve(CachedData);
+            }
 
             //[2] Add topic id step1: get a list of all topics and ids
             DataService.getPostIdData(proposal_item.category_num).then(function (id_data){
-                var topics_array = id_data.topic_list.topics;
+                var topics_array = (id_data.topic_list || { topics: [] }).topics;
                 var topics_to_id_table = {};//e.g. topics_to_id_table['群眾募資'] = 14;
 
                 topics_array.map(function (topics_item){
@@ -385,7 +388,7 @@ app.controller('NavCtrl', ['$scope', 'DataService', '$location', function ($scop
     console.log(value);
     console.log("***");
     $scope.proposal = value;
-    DataService.getCatchedData().then(function (data) {
+    DataService.getCachedData().then(function (data) {
       $scope.currentProposal = data[value];
 
     });
@@ -430,7 +433,7 @@ app.controller('IndexCtrl', ['$scope', 'DataService', '$location', '$sce', funct
       return $scope.$apply(fn);
     }
   };
-  DataService.getCatchedData().then(function (d) { $scope.safeApply(function(){
+  DataService.getCachedData().then(function (d) { $scope.safeApply(function(){
     $scope.idx = 0;
     Object.keys(d).map(function (title){
       var blockquote = d[title].categories[0].content.match(/<blockquote>\n((?:.+\n)+)<\/blockquote>\n/);
@@ -554,10 +557,6 @@ app.controller('ProposalCtrl', ['$scope', 'DataService', '$location', '$sce', '$
 
   var topicref = $location.$$url.split('/')[1] || 'crowdfunding';
 
-  // Redirect now before we fix the loading issues
-  location.href = 'https://talk.sdparty.tw/c/' + (topicref.replace(/^new-/, ''));
-  return;
-
   //topicref = $location.path().split('/')[1] || 'crowdfunding';
   //console.log($location.path().split('/')[1]);
 
@@ -629,7 +628,7 @@ app.controller('ProposalCtrl', ['$scope', 'DataService', '$location', '$sce', '$
       if (replace) $location.replace();
   };
 
-  DataService.getCatchedData().then(function (d) {
+  DataService.getCachedData().then(function (d) {
       $scope.currentProposal = d[$scope.topicref];
       $scope.categories = d[$scope.topicref].categories;
       if($routeParams.id){
@@ -641,14 +640,16 @@ app.controller('ProposalCtrl', ['$scope', 'DataService', '$location', '$sce', '$
 
   });
 
-  /* Prevent page relaod when selecting discussion. (So user won't get lost) */
+  /* Prevent page reload when selecting discussion. (So user won't get lost) */
   var lastRoute = $route.current;
   $scope.$on('$locationChangeSuccess', function(event) {
       if($route.current.pathParams){
-          //console.log($route.current.pathParams);
           //if($route.current.pathParams.topic_id)
-          if($route.current.pathParams.id === lastRoute.pathParams.id)
-            $route.current = lastRoute;
+          if($route.current.pathParams.id === lastRoute.pathParams.id) {
+            if($route.current.$$route.originalPath == lastRoute.$$route.originalPath) {
+              $route.current = lastRoute;
+            }
+          }
 
       }
   });
@@ -664,7 +665,8 @@ app.controller('ProposalCtrl', ['$scope', 'DataService', '$location', '$sce', '$
 
 
       }else{
-        $location.path('/' + topicref + '/' + $scope.currentCategory.id + '/' + $scope.currentCategory.children[index-1].id);
+        var id = $scope.currentCategory.children[index-1].id;
+        $location.path('/' + topicref + '/' + $scope.currentCategory.id + '/' + id);
         $scope.focusDiscussion = index;
         $scope.currentDiscussion = $scope.currentCategory.children[index-1];
         $scope.expand = null;
