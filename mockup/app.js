@@ -283,6 +283,7 @@ app.factory('DataService', function ($http, $q){
     return deferred.promise;
   };
 
+  var timestamp = '1427704596';
   DataService.getBookData = function(path){
     var deferred = $q.defer();
     $http.get('/' + path + '/content.json').
