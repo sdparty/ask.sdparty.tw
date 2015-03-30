@@ -280,7 +280,7 @@ app.factory('DataService', function ($http, $q){
     return deferred.promise;
   };
 
-  var timestamp = '1427633425';
+  var timestamp = '1427704596';
   DataService.getBookData = function(path, gitbook_url){
     var deferred = $q.defer();
     var b64 = localStorage.getItem(path + timestamp);
