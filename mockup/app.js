@@ -6,15 +6,15 @@ var TOPICS = [ 'new-economy', 'new-society', 'new-politics' // Three Platforms
     , 'prosperity' // One Bow
     ];
 var PREFIXES =
-    [ { key: "platforms"
-      , title: "政綱：擘劃更好的台灣。"
-      , description: "政綱，是社會民主黨對於一個「更好的台灣」所擘劃的藍圖，是社民黨長期奮鬥的大方向。"
-      , issue: "新經濟、新社會、新政治"
-      }
-    , { key: "plans"
+    [ { key: "plans"
       , title: "政見：五箭一弓。"
       , description: "政見，是社民黨在「政綱」所框架的基礎原則下，針對 2016 年國會改選，所擬訂的候選人共同政見。"
       , issue: "捍衛勞動權、全民年金改革、匡正稅制、透明監督、尊重差異、推動社會經濟"
+      }
+    , { key: "platforms"
+      , title: "政綱：擘劃更好的台灣。"
+      , description: "政綱，是社會民主黨對於一個「更好的台灣」所擘劃的藍圖，是社民黨長期奮鬥的大方向。"
+      , issue: "新經濟、新社會、新政治"
       }
     ];
 var app = angular.module("app", [
